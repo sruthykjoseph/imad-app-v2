@@ -1,14 +1,26 @@
 //Counter code
 var button = document.getElementById('counter');
-var counter = 0;
 
 button.onclick = function(){
-  // Mmake a request to the counter endpoint
+  // Create the request object
+  var request = new XMLHttpRequest();
   
   // Capture the response and store it in a variable
+  request.onreadystatechange = function () {
+     if (request.readyState === XMLHttpRequest.DONE) {
+         if (request.statue === 200) {
+             var counter = request.responsetext;
+             var span = document.getElementById('count');
+             span.innerHTML = counter.toString();
+             
+         }
+     }
+    
+    // Not done yet
+  };
   
-  //Render the variable in the correct span
-  var span = document.getElementById('count');
-  counter = counter + 1;
-  span.innerHTML = counter.toString();
+  //Make the request
+  request.open('GET', 'http://sruthykjoseph.imad.hasura-app.io/counter', true);
+  request.send(null);
+  
 };
